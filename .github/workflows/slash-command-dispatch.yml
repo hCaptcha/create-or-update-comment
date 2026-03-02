@@ -4,6 +4,11 @@ on:
     types: [created]
 jobs:
   slashCommandDispatch:
+    if: |
+      github.event.issue.pull_request
+      && (
+        contains(fromJson('["OWNER", "MEMBER"]'), github.event.comment.author_association)
+      )
     runs-on: ubuntu-latest
     steps:
       - name: Slash Command Dispatch
